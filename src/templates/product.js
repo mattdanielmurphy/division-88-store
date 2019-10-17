@@ -10,9 +10,7 @@ import CategoryNav from 'src/components/CategoryNav'
 const Store = ({ pageContext }) => {
   const { categories, selectedCategory, sku } = pageContext
   console.log(pageContext)
-  const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem('stripe_checkout_items')) || []
-  )
+  const [cart, setCart] = useState([])
   const [stripe, setStripe] = useState()
 
   useEffect(() => {
@@ -20,6 +18,9 @@ const Store = ({ pageContext }) => {
       betas: ['checkout_beta_4'],
     })
     setStripe(stripe)
+
+    const existingCart = JSON.parse(localStorage.getItem('stripe_checkout_items'))
+    if (existingCart && existingCart.length) setCart(existingCart)
   }, [])
 
   return (
