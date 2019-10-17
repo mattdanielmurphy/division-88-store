@@ -64,6 +64,12 @@ exports.createPages = async ({ graphql, actions }) => {
 
     const skus = result.data.allStripeSku.edges.map(({ node }) => node)
 
+    skus.forEach((sku) => {
+      createPage({
+        path: `${selectedCategory.split(' ').join('-')}/${sku.name}`
+      })
+    })
+
     createPage({
       path: `${selectedCategory.split(' ').join('-')}`,
       component: categoryProductsTemplate,

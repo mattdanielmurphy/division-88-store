@@ -31,6 +31,7 @@
   ],
   "license": "MIT",
   "scripts": {
+    "create-env": "printenv > .env",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
