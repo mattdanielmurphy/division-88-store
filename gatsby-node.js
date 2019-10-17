@@ -1,10 +1,11 @@
 const path = require(`path`)
+const categoryProductsTemplate = path.resolve(
+  `src/templates/category-products.js`
+)
+const productTemplate = path.resolve(`src/templates/product.js`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-  const categoryProductsTemplate = path.resolve(
-    `src/templates/category-products.js`
-  )
   const result = await graphql(
     `
       query loadPagesQuery {
@@ -64,9 +65,11 @@ exports.createPages = async ({ graphql, actions }) => {
 
     const skus = result.data.allStripeSku.edges.map(({ node }) => node)
 
-    skus.forEach((sku) => {
+    skus.forEach((sku, index) => {
       createPage({
-        path: `${selectedCategory.split(' ').join('-')}/${sku.name}`
+        path: `${selectedCategory.split(' ').join('-')}/${index}`,
+        component: productTemplate,
+        context: { categories: ['all', ...categories], selectedCategory, sku },
       })
     })
 
