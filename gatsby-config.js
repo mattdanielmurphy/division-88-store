@@ -4,13 +4,15 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby E-Commerce Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@thorwebdev`,
+    title: `Division 88`,
+    description: `Division 88 web store. Division 88 is a recording studio operating in Kensington Market, Toronto.`,
+    author: `Division 88`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
     'gatsby-plugin-stripe',
+    'gatsby-plugin-sass',
+    'gatsby-plugin-root-import',
     {
       resolve: `gatsby-source-stripe`,
       options: {
@@ -34,8 +36,8 @@ module.exports = {
         name: `gatsby-starter-default`,
         short_name: `starter`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#000`,
+        theme_color: `#000`,
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },

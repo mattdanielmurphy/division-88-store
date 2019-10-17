@@ -1,0 +1,39 @@
+body {
+  background: #000;
+  color: white;
+  font-family: 'Gill Sans', sans-serif;
+}
+
+button {
+  font-size: 13px;
+  text-align: center;
+  color: #fff;
+  outline: none;
+  padding: 12px;
+  box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.1);
+  background-color: rgb(255, 178, 56);
+  border-radius: 6px;
+  letter-spacing: 1.5px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1rem 0 1rem 0;
+}
+
+.item-in-cart {
+}
+
+a.category {
+  color: white;
+  display: block;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin: 0.5rem 0;
+  &.selected {
+    color: #ffcc00;
+  }
+}

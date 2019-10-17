@@ -1,48 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const buttonStyles = {
-  fontSize: '13px',
-  textAlign: 'center',
-  color: '#fff',
-  outline: 'none',
-  padding: '12px 60px',
-  boxShadow: '2px 5px 10px rgba(0,0,0,.1)',
-  backgroundColor: 'rgb(255, 178, 56)',
-  borderRadius: '6px',
-  letterSpacing: '1.5px',
-}
-
-const Checkout = class extends React.Component {
+const Checkout = ({ stripe, cart }) => {
   // Initialise Stripe.js with your publishable key.
   // You can find your key in the Dashboard:
   // https://dashboard.stripe.com/account/apikeys
-  componentDidMount() {
-    this.stripe = window.Stripe('pk_test_jG9s3XMdSjZF9Kdm5g59zlYd')
-  }
 
-  async redirectToCheckout(event) {
-    event.preventDefault()
-    const { error } = await this.stripe.redirectToCheckout({
-      items: [{ sku: 'sku_DjQJN2HJ1kkvI3', quantity: 1 }],
-      successUrl: `${window.location.origin}/page-2/`,
-      cancelUrl: `${window.location.origin}/`,
+  const redirectToCheckout = async event => {
+    const { error } = await stripe.redirectToCheckout({
+      items: cart.map(item => ({ sku: item.sku.id, quantity: item.quantity })),
+      successUrl: `http://localhost:8000/payment-successful`,
+      cancelUrl: `http://localhost:8000/`,
     })
 
     if (error) {
-      console.warn('Error:', error)
+      console.error('Error:', error)
     }
   }
 
-  render() {
-    return (
-      <button
-        style={buttonStyles}
-        onClick={event => this.redirectToCheckout(event)}
-      >
-        BUY MY BOOK
-      </button>
-    )
-  }
+  return (
+    <button onClick={redirectToCheckout} disabled={!cart.length}>
+      {cart.length ? 'GO TO CHECKOUT' : 'CART IS EMPTY'}
+    </button>
+  )
 }
 
 export default Checkout

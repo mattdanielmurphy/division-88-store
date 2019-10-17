@@ -1,28 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
+import styled from 'styled-components'
 
-const cardStyles = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-around',
-  alignItems: 'flex-start',
-  padding: '1rem',
-  marginBottom: '1rem',
-  boxShadow: '5px 5px 25px 0 rgba(46,61,73,.2)',
-  backgroundColor: '#fff',
-  borderRadius: '6px',
-  maxWidth: '300px',
-}
-const buttonStyles = {
-  fontSize: '13px',
-  textAlign: 'center',
-  color: '#fff',
-  outline: 'none',
-  padding: '12px',
-  boxShadow: '2px 5px 10px rgba(0,0,0,.1)',
-  backgroundColor: 'rgb(255, 178, 56)',
-  borderRadius: '6px',
-  letterSpacing: '1.5px',
-}
+const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 5px 5px 25px 0 rgba(46, 61, 73, 0.2);
+  background-color: #222;
+  border-radius: 6px;
+  max-width: 300px;
+`
 
 const formatPrice = (amount, currency) => {
   let price = (amount / 100).toFixed(2)
@@ -34,35 +24,14 @@ const formatPrice = (amount, currency) => {
   return numberFormat.format(price)
 }
 
-const SkuCard = class extends React.Component {
-  async redirectToCheckout(event, sku, quantity = 1) {
-    event.preventDefault()
-    const { error } = await this.props.stripe.redirectToCheckout({
-      items: [{ sku, quantity }],
-      successUrl: `${window.location.origin}/page-2/`,
-      cancelUrl: `${window.location.origin}/advanced`,
-    })
-
-    if (error) {
-      console.warn('Error:', error)
-    }
-  }
-
-  render() {
-    const sku = this.props.sku
-    return (
-      <div style={cardStyles}>
-        <h4>{sku.attributes.name}</h4>
-        <p>Price: {formatPrice(sku.price, sku.currency)}</p>
-        <button
-          style={buttonStyles}
-          onClick={event => this.redirectToCheckout(event, sku.id)}
-        >
-          BUY ME
-        </button>
-      </div>
-    )
-  }
+const SkuCard = ({ sku, addToCart }) => {
+  return (
+    <Card>
+      <h4>{sku.attributes.name}</h4>
+      <p>Price: {formatPrice(sku.price, sku.currency)}</p>
+      <button onClick={addToCart}>'Add to cart'</button>
+    </Card>
+  )
 }
 
 export default SkuCard
