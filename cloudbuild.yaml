@@ -7,15 +7,12 @@ steps:
     args: ['add', 'firebase-tools']
   - name: node:10.15.1
     entrypoint: yarn
-    env:
-      - 'GATSBY_STRIPE_PUBLIC_KEY=pk_test_3J4NO9NGuWP2zaDkmR7Wtj7p003uMgAD9R'
-      - 'STRIPE_SECRET_KEY=sk_test_YhHqfAd3zACHQrGSB0ImLGD400unWISbpf'
     args: ['build']
   - name: 'node:10.15.1'
     entrypoint: './node_modules/.bin/firebase'
-    args: ['deploy', '--project', '$PROJECT_ID', '--token', '$_TOKEN']
-options:
-  env:
-    - 'GATSBY_STRIPE_PUBLIC_KEY=pk_test_3J4NO9NGuWP2zaDkmR7Wtj7p003uMgAD9R'
-    - 'STRIPE_SECRET_KEY=sk_test_YhHqfAd3zACHQrGSB0ImLGD400unWISbpf'
+    args: ['deploy', '--only', 'hosting', '--project', '$PROJECT_ID', '--token', '$_TOKEN']
+# options:
+#   env:
+#     - 'GATSBY_STRIPE_PUBLIC_KEY=pk_test_3J4NO9NGuWP2zaDkmR7Wtj7p003uMgAD9R'
+#     - 'STRIPE_SECRET_KEY=sk_test_YhHqfAd3zACHQrGSB0ImLGD400unWISbpf'
 # readmore https://www.crowdform.co.uk/
